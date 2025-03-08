@@ -46,15 +46,11 @@ jobs:
           echo "$BODY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Zip the vault (excluding workflows and release-info if need be for original template template repo)
+      - name: Zip the vault (excluding workflows and release-info)
         run: |
-          # Extract the repo name from GITHUB_REPOSITORY (format: owner/repo)
-          REPO_NAME=${GITHUB_REPOSITORY#*/}
-          if [ "$REPO_NAME" = "obsidian-vault-template-template" ]; then
-            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./*
-          else
-            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./* -x ".github/*" -x "release-info.md"
-          fi
+          zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./* \
+          -x ".github/*" \
+          -x "release-info.md"
 
       - name: Check if release already exists
         id: check_release
@@ -121,11 +117,9 @@ jobs:
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Provide the token here
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: obsidian-vault-${{ steps.extract_data.outputs.version }}.zip
           asset_name: obsidian-vault-${{ steps.extract_data.outputs.version }}.zip
           asset_content_type: application/zip
-
-

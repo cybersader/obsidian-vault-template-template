@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "How to use release-info.md",
+                "file": "release-info.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "How to use release-info"
+              "title": "release-info"
             }
           }
         ]
@@ -182,12 +182,12 @@
   },
   "active": "68dcc82ee597e4c9",
   "lastOpenFiles": [
+    "How to use release-info.md",
     "release-info.md",
     "release-info-FOR_FINAL_TEMPLATE_REPO.md",
     "release-info - Copy.md",
     "obsidian-vault-template-template",
     "README.md",
-    "How to use release-info.md",
     "_TEMPLATE_GUIDE/_TEMPLATE_GUIDE.md",
     "_TEMPLATE_GUIDE/2 -/2 -.md",
     "0 - Projects, Workspaces/0 - Projects, Workspaces.md",
