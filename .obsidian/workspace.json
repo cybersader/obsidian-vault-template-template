@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "release-info.md",
+                "file": "How to use release-info.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "release-info"
+              "title": "How to use release-info"
             }
           }
         ]
@@ -182,9 +182,11 @@
   },
   "active": "68dcc82ee597e4c9",
   "lastOpenFiles": [
+    "release-info.md",
+    "release-info-FOR_FINAL_TEMPLATE_REPO.md",
+    "release-info - Copy.md",
     "obsidian-vault-template-template",
     "README.md",
-    "release-info.md",
     "How to use release-info.md",
     "_TEMPLATE_GUIDE/_TEMPLATE_GUIDE.md",
     "_TEMPLATE_GUIDE/2 -/2 -.md",
@@ -215,8 +217,6 @@
     "Testing",
     "Templates_Pandoc",
     "Templates/Pandoc_Example_1.md",
-    "Templates",
-    "Framework Mapping/Frameworker_Example/Framework_Example_Data/ID 1/ID 12/ID 12.md",
-    "Framework Mapping/Frameworker_Example/Framework_Example_Data/ID 1/ID 12"
+    "Templates"
   ]
 }

@@ -34,23 +34,27 @@ jobs:
           echo "release_name=$NAME" >> $GITHUB_OUTPUT
           echo "only_release_if_new=$ONLY_NEW" >> $GITHUB_OUTPUT
 
-      # - name: Extract release body from Markdown (below front matter)
-      #   id: extract_body
-      #   run: |
-      #     # Extract lines after the second '---'
-      #     # First remove everything up to and including the first '---'
-      #     # Then remove everything up to and including the next '---'
-      #     BODY=$(sed '1,/^---$/d' release-info.md | sed '1,/^---$/d')
-          
-      #     echo "release_body<<EOF" >> $GITHUB_OUTPUT
-      #     echo "$BODY" >> $GITHUB_OUTPUT
-      #     echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Zip the vault (excluding workflows and release-info)
+      - name: Extract release body from Markdown (below front matter)
+        id: extract_body
         run: |
-          zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./* \
-          -x ".github/*" \
-          -x "release-info.md"
+          # Extract lines after the second '---'
+          # First remove everything up to and including the first '---'
+          # Then remove everything up to and including the next '---'
+          BODY=$(sed '1,/^---$/d' release-info.md | sed '1,/^---$/d')
+          
+          echo "release_body<<EOF" >> $GITHUB_OUTPUT
+          echo "$BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Zip the vault (excluding workflows and release-info if need be for original template template repo)
+        run: |
+          # Extract the repo name from GITHUB_REPOSITORY (format: owner/repo)
+          REPO_NAME=${GITHUB_REPOSITORY#*/}
+          if [ "$REPO_NAME" = "obsidian-vault-template-template" ]; then
+            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./*
+          else
+            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./* -x ".github/*" -x "release-info.md"
+          fi
 
       - name: Check if release already exists
         id: check_release
