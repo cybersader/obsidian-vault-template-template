@@ -44,14 +44,14 @@ jobs:
           echo "$BODY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Zip the vault (conditionally excluding workflows and release-info)
+      - name: Zip the vault (conditionally excluding files)
         run: |
-          # Extract the repo name from GITHUB_REPOSITORY (format: owner/repo)
+          # Using '.' includes hidden files like .github, .obsidian, etc.
           REPO_NAME=${GITHUB_REPOSITORY#*/}
           if [ "$REPO_NAME" = "obsidian-vault-template-template" ]; then
-            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./*
+            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip .
           else
-            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./* -x ".github/*" -x "release-info.md"
+            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip . -x "./.github/*" -x "./release-info.md" -x "./.gitattributes"
           fi
 
       - name: Check if release already exists
