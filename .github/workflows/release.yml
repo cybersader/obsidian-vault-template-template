@@ -38,19 +38,21 @@ jobs:
         id: extract_body
         run: |
           # Extract lines after the second '---'
-          # First remove everything up to and including the first '---'
-          # Then remove everything up to and including the next '---'
           BODY=$(sed '1,/^---$/d' release-info.md | sed '1,/^---$/d')
           
           echo "release_body<<EOF" >> $GITHUB_OUTPUT
           echo "$BODY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Zip the vault (excluding workflows and release-info)
+      - name: Zip the vault (conditionally excluding workflows and release-info)
         run: |
-          zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./* \
-          -x ".github/*" \
-          -x "release-info.md"
+          # Extract the repo name from GITHUB_REPOSITORY (format: owner/repo)
+          REPO_NAME=${GITHUB_REPOSITORY#*/}
+          if [ "$REPO_NAME" = "obsidian-vault-template-template" ]; then
+            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./*
+          else
+            zip -r obsidian-vault-${{ steps.extract_data.outputs.version }}.zip ./* -x ".github/*" -x "release-info.md"
+          fi
 
       - name: Check if release already exists
         id: check_release
